@@ -5,16 +5,14 @@
 <title>Happy valentines my baby scarlette!!!!</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap'); /* cursive font */
-
 body {
   margin: 0;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #d8b4ff, #a084fc); /* light purple */
-  font-family: 'Dancing Script', cursive; /* cursive font */
+  background: linear-gradient(135deg, #d8b4ff, #a084fc);
+  font-family: Arial, sans-serif; /* NORMAL FONT */
   color: white;
   cursor: pointer;
   overflow: hidden;
@@ -23,9 +21,9 @@ body {
 /* envelope */
 .envelope {
   position: relative;
-  width: 500px;   /* bigger box */
-  height: 320px;  /* bigger box */
-  background: #c084fc; /* light purple */
+  width: 500px;
+  height: 320px;
+  background: #c084fc;
   border-radius: 15px;
   box-shadow: 0 0 35px rgba(200, 100, 255, 0.6);
   display: flex;
@@ -53,15 +51,15 @@ body {
 /* letter */
 .letter {
   position: absolute;
-  width: 420px;   /* bigger letter */
-  background: #e0b3ff; /* lighter purple */
+  width: 420px;
+  background: #e0b3ff;
   padding: 30px;
   border-radius: 20px;
   text-align: center;
   transform: translateY(60px);
   opacity: 0;
   transition: 1s;
-  font-family: 'Dancing Script', cursive; /* cursive text */
+  font-family: Arial, sans-serif; /* NORMAL FONT */
 }
 
 .open .letter {
@@ -75,16 +73,16 @@ h1 {
 }
 
 p {
-  font-size: 20px; /* slightly bigger text */
+  font-size: 20px;
   line-height: 1.6;
   min-height: 140px;
 }
 
 .signature {
   margin-top: 15px;
-  font-size: 24px; /* bigger signature */
+  font-size: 24px;
   color: #7f5af0;
-  font-family: 'Dancing Script', cursive;
+  font-family: Arial, sans-serif; /* NORMAL FONT */
 }
 
 /* glowing */
@@ -145,7 +143,6 @@ const volumeSlider = document.getElementById("volumeSlider");
 let index = 0;
 let opened = false;
 
-/* click anywhere */
 document.body.addEventListener("click", () => {
   if (!opened) {
     envelope.classList.add("open");
@@ -155,7 +152,6 @@ document.body.addEventListener("click", () => {
   }
 }, { once: true });
 
-/* typing effect */
 function typeText() {
   if (index < text.length) {
     typedText.innerHTML += text.charAt(index);
@@ -164,12 +160,10 @@ function typeText() {
   }
 }
 
-/* volume control */
 volumeSlider.addEventListener("input", () => {
   music.volume = volumeSlider.value;
 });
 
-/* floating hearts */
 function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
@@ -189,5 +183,3 @@ setInterval(createHeart, 400);
 
 </body>
 </html>
-
-
