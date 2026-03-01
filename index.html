@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Letter For You</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  @font-face {
+    font-family: 'FallbackSerif';
+    src: local('Georgia'), local('Times New Roman'), local('serif');
+  }
+
+  body {
+    min-height: 100vh;
+    background: #f2e8dc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    font-family: Georgia, 'Times New Roman', serif;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(220, 175, 155, 0.45) 0%, transparent 52%),
+      radial-gradient(ellipse at 85% 88%, rgba(190, 155, 200, 0.25) 0%, transparent 52%),
+      #f0e6d8;
+    z-index: 0;
+  }
+
+  .envelope-wrapper {
+    position: relative;
+    z-index: 10;
+    max-width: 600px;
+    width: 100%;
+    opacity: 0;
+    animation: rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .seal-top {
+    text-align: center;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: rise 1s 0.5s ease forwards;
+  }
+
+  .seal-top .rose {
+    font-size: 2.2rem;
+    display: inline-block;
+    animation: sway 5s ease-in-out infinite;
+    filter: drop-shadow(0 4px 12px rgba(160, 55, 70, 0.3));
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(-6deg); }
+    50%       { transform: rotate(6deg); }
+  }
+
+  .letter-card {
+    background: #fdfaf4;
+    border-radius: 1px;
+    padding: 60px 66px 52px;
+    position: relative;
+    box-shadow:
+      0 1px 0 rgba(200, 170, 130, 0.5),
+      0 4px 8px rgba(90, 60, 30, 0.07),
+      0 16px 48px rgba(80, 48, 24, 0.13),
+      0 36px 80px rgba(55, 28, 8, 0.08);
+    border: 1px solid rgba(205, 178, 148, 0.4);
+  }
+
+  /* Ruled lines */
+  .letter-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      rgba(185, 155, 115, 0.1) 31px,
+      rgba(185, 155, 115, 0.1) 32px
+    );
+    border-radius: 1px;
+    pointer-events: none;
+  }
+
+  /* Left margin line */
+  .letter-card::after {
+    content: '';
+    position: absolute;
+    left: 66px;
+    top: 20px;
+    bottom: 20px;
+    width: 1px;
+    background: rgba(210, 130, 130, 0.15);
+  }
+
+  .red-string {
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 24px;
+    background: linear-gradient(to bottom, rgba(139, 38, 53, 0.5), transparent);
+  }
+
+  .letter-meta {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 36px;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #b09070;
+    font-style: italic;
+  }
+
+  .salutation {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: #6b3840;
+    margin-bottom: 28px;
+    letter-spacing: 0.01em;
+  }
+
+  .letter-body {
+    color: #2c1e16;
+    font-size: 1.04rem;
+    line-height: 2.05;
+    font-weight: normal;
+  }
+
+  .letter-body p {
+    margin-bottom: 20px;
+  }
+
+  .letter-body em {
+    font-style: italic;
+    color: #7a3842;
+  }
+
+  .closing {
+    margin-top: 36px;
+    font-style: italic;
+    color: #6b3840;
+    font-size: 0.98rem;
+  }
+
+  .signature {
+    margin-top: 8px;
+    font-style: italic;
+    font-size: 1.45rem;
+    color: #8b2635;
+    letter-spacing: 0.01em;
+  }
+
+  .seal-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 28px;
+    gap: 14px;
+    opacity: 0;
+    animation: rise 1s 1.4s ease forwards;
+  }
+
+  .seal-bottom .dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(160, 100, 100, 0.28);
+  }
+
+  .seal-bottom .wax {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 2px 8px rgba(180, 55, 65, 0.28));
+  }
+
+  @media (max-width: 560px) {
+    .letter-card { padding: 40px 28px 36px; }
+    .letter-card::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="envelope-wrapper">
+
+  <div class="seal-top">
+    <span class="rose">🌹</span>
+  </div>
+
+  <div class="letter-card">
+    <div class="red-string"></div>
+
+    <div class="letter-meta">A letter, for you</div>
+
+    <div class="salutation">To you —</div>
+
+    <div class="letter-body">
+      <p>I will be honest. I felt like I missed an opportunity asking you out. I had a huge crush on you, but I was too much of a pussy to ask you out, even if you said no. You're very pretty, and I love all your outfits and your behavior. I love everything you do, and I love talking with you all the time. I was always happy when we interacted.</p>
+
+      <p>I just want you to know my feelings for you. I know this is weird for me, but at least I'm spreading my feelings out. I'm really shy. I'm a <em>torpe</em> guy, if you want to know. I don't really know how to express my feelings. It's my first time. I'm not expecting you to accept my feelings. If this ruins our friendship, I'll take the risk.</p>
+
+      <p>Let me guess, you probably have a boyfriend, and that's okay for me. I don't want any trouble. I just want to express my feelings. I know I'm not fit for you. I'm kind of weird. And I just want to know what you think of me, even if it's negative. I'm just looking for closure so I can move on.</p>
+    </div>
+
+    <div class="closing">Sincerely,</div>
+    <div class="signature">Someone who truly cared 🌹</div>
+  </div>
+
+  <div class="seal-bottom">
+    <div class="dot"></div>
+    <span class="wax">💌</span>
+    <div class="dot"></div>
+  </div>
+
+</div>
+
+</body>
+</html>
