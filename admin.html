@@ -2,18 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
-  <title>Admin File Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -21,329 +15,140 @@
       --bg-2: #12192f;
       --bg-3: #1b2250;
       --card: rgba(255, 255, 255, 0.08);
-      --card-border: rgba(255, 255, 255, 0.12);
+      --border: rgba(255, 255, 255, 0.12);
       --text: #f8fafc;
       --muted: #94a3b8;
       --blue: #3b82f6;
-      --blue-2: #2563eb;
-      --purple: #8b5cf6;
       --green: #22c55e;
-      --green-2: #16a34a;
-      --danger: #ef4444;
-      --danger-2: #dc2626;
-      --yellow: #f59e0b;
-      --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
+      --red: #ef4444;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+      font-family: "Inter", sans-serif;
     }
 
     body {
       min-height: 100vh;
-      font-family: "Inter", sans-serif;
-      color: var(--text);
+      padding: 24px;
+      color: white;
       background:
-        radial-gradient(circle at 15% 20%, rgba(59,130,246,0.20), transparent 18%),
-        radial-gradient(circle at 85% 80%, rgba(139,92,246,0.22), transparent 20%),
+        radial-gradient(circle at top left, rgba(59,130,246,0.25), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(139,92,246,0.25), transparent 25%),
         linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      width: 340px;
-      height: 340px;
-      border-radius: 50%;
-      filter: blur(110px);
-      z-index: 0;
-      animation: floatBlob 10s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
-
-    body::before {
-      top: 8%;
-      left: -90px;
-      background: rgba(59, 130, 246, 0.28);
-    }
-
-    body::after {
-      bottom: 6%;
-      right: -90px;
-      background: rgba(168, 85, 247, 0.24);
-      animation-delay: 2s;
-    }
-
-    @keyframes floatBlob {
-      from { transform: translate(0, 0) scale(1); }
-      to { transform: translate(30px, 40px) scale(1.12); }
     }
 
     .app {
-      position: relative;
-      z-index: 1;
-      max-width: 1250px;
+      max-width: 1200px;
       margin: auto;
-      padding: 24px 18px 60px;
     }
 
     .glass {
       background: var(--card);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.28);
+    }
+
+    .header, .form-box, .file-row {
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 20px;
     }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-      padding: 24px;
-      border-radius: var(--radius-xl);
-      margin-bottom: 24px;
-    }
-
-    .brand h1 {
-      font-size: clamp(24px, 4vw, 34px);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-
-    .brand p {
-      color: var(--muted);
-      margin-top: 8px;
-      font-size: 14px;
-    }
-
-    .header-actions {
-      display: flex;
       gap: 12px;
       flex-wrap: wrap;
     }
 
-    .top-btn {
-      border: none;
-      padding: 12px 18px;
-      border-radius: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      color: white;
-      transition: 0.22s ease;
-      font-family: inherit;
-    }
-
-    .top-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .blue-btn {
-      background: linear-gradient(135deg, var(--blue), var(--blue-2));
-      box-shadow: 0 14px 28px rgba(37,99,235,0.25);
-    }
-
-    .purple-btn {
-      background: linear-gradient(135deg, var(--purple), #6d28d9);
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .stat-card {
-      padding: 20px;
-      border-radius: var(--radius-lg);
-    }
-
-    .stat-card h3 {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .stat-card p {
+    .header h1 {
       font-size: 30px;
       font-weight: 800;
-      letter-spacing: -0.03em;
     }
 
-    .layout {
-      display: grid;
-      grid-template-columns: 380px 1fr;
-      gap: 20px;
-    }
-
-    .panel {
-      padding: 22px;
-      border-radius: 28px;
-    }
-
-    .panel h2 {
-      font-size: 22px;
-      margin-bottom: 16px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-
-    .panel p.desc {
+    .header p {
       color: var(--muted);
-      margin-bottom: 18px;
+      margin-top: 6px;
       font-size: 14px;
-      line-height: 1.6;
     }
 
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      color: #dbeafe;
-      margin-bottom: 8px;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.06);
-      color: white;
-      border-radius: 16px;
-      padding: 14px 15px;
-      outline: none;
-      font-size: 14px;
-      font-family: inherit;
-      transition: 0.22s ease;
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 90px;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: rgba(96,165,250,0.45);
-      box-shadow: 0 0 0 4px rgba(96,165,250,0.12);
-    }
-
-    .form-actions {
+    .actions {
       display: flex;
       gap: 10px;
-      margin-top: 14px;
       flex-wrap: wrap;
     }
 
-    .action-btn {
-      flex: 1;
-      min-width: 120px;
+    button {
       border: none;
-      padding: 13px 16px;
+      padding: 12px 16px;
       border-radius: 16px;
       cursor: pointer;
       font-weight: 700;
-      font-family: inherit;
       color: white;
-      transition: 0.22s ease;
+      transition: 0.2s ease;
     }
 
-    .save-btn {
-      background: linear-gradient(135deg, var(--green), var(--green-2));
-    }
-
-    .reset-btn {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .danger-btn {
-      background: linear-gradient(135deg, var(--danger), var(--danger-2));
-    }
-
-    .warning-btn {
-      background: linear-gradient(135deg, var(--yellow), #d97706);
-    }
-
-    .action-btn:hover {
+    button:hover {
       transform: translateY(-2px);
     }
 
-    .files-toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+    .blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+    .green { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .gray { background: rgba(255,255,255,0.08); }
+
+    .form-box h2 {
       margin-bottom: 18px;
+      font-size: 22px;
     }
 
-    .search-box {
-      flex: 1;
-      min-width: 220px;
-      position: relative;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
     }
 
-    .search-box input {
+    input, textarea, select {
       width: 100%;
-      padding: 14px 16px 14px 44px;
+      padding: 14px 16px;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(255,255,255,0.06);
       color: white;
       outline: none;
+      font-size: 14px;
     }
 
-    .search-box::before {
-      content: "⌕";
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #cbd5e1;
-      font-size: 18px;
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+      margin-top: 14px;
+    }
+
+    .submit-row {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .files-list {
       display: grid;
-      gap: 14px;
+      gap: 16px;
+      margin-top: 20px;
     }
 
-    .file-item {
-      padding: 18px;
-      border-radius: 22px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+    .file-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
       flex-wrap: wrap;
-      transition: 0.22s ease;
-    }
-
-    .file-item:hover {
-      transform: translateY(-3px);
-      border-color: rgba(96,165,250,0.22);
     }
 
     .file-left {
@@ -351,257 +156,107 @@
       align-items: center;
       gap: 14px;
       flex: 1;
-      min-width: 220px;
+      min-width: 260px;
     }
 
-    .file-icon {
-      width: 54px;
-      height: 54px;
+    .icon {
+      width: 58px;
+      height: 58px;
       border-radius: 18px;
       display: grid;
       place-items: center;
       font-size: 24px;
-      background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(139,92,246,0.95));
-      box-shadow: 0 14px 28px rgba(59,130,246,0.25);
-      flex-shrink: 0;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
     }
 
-    .file-meta h3 {
+    .file-left h3 {
       font-size: 18px;
-      margin-bottom: 4px;
+      font-weight: 700;
     }
 
-    .file-meta p {
+    .file-left p {
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.5;
+      margin-top: 4px;
     }
 
-    .badge {
-      display: inline-flex;
+    .tag {
+      display: inline-block;
       margin-top: 8px;
-      padding: 7px 12px;
+      padding: 6px 10px;
       border-radius: 999px;
       font-size: 12px;
       font-weight: 700;
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.08);
     }
 
-    .badge.protected {
-      background: rgba(96,165,250,0.12);
-      color: #93c5fd;
-      border-color: rgba(96,165,250,0.18);
-    }
-
-    .badge.open {
-      background: rgba(34,197,94,0.12);
-      color: #86efac;
-      border-color: rgba(34,197,94,0.18);
-    }
-
-    .file-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .small-btn {
-      border: none;
-      padding: 11px 14px;
-      border-radius: 14px;
-      cursor: pointer;
-      font-weight: 700;
-      color: white;
-      transition: 0.2s ease;
-      font-family: inherit;
-    }
-
-    .small-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .edit-btn {
-      background: linear-gradient(135deg, var(--blue), var(--blue-2));
-    }
-
-    .delete-btn {
-      background: linear-gradient(135deg, var(--danger), var(--danger-2));
-    }
-
-    .empty {
-      text-align: center;
-      color: var(--muted);
-      padding: 24px;
-      border-radius: 20px;
-      border: 1px dashed rgba(255,255,255,0.12);
-    }
-
-    .toast {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      padding: 14px 18px;
-      border-radius: 18px;
-      background: rgba(15, 23, 42, 0.92);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--shadow);
-      z-index: 99999;
-      opacity: 0;
-      transform: translateY(20px);
-      pointer-events: none;
-      transition: 0.25s ease;
+    .message {
+      margin-top: 14px;
       font-size: 14px;
-      max-width: 320px;
+      font-weight: 700;
+      min-height: 20px;
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 980px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-    }
+    .success { color: #4ade80; }
+    .error { color: #f87171; }
 
     @media (max-width: 700px) {
-      .app {
-        padding: 18px 14px 42px;
-      }
-
-      .header,
-      .panel {
-        padding: 20px;
-      }
-
-      .file-actions,
-      .form-actions,
-      .header-actions {
-        flex-direction: column;
-      }
-
-      .small-btn,
-      .action-btn,
-      .top-btn {
-        width: 100%;
-      }
+      body { padding: 14px; }
+      .actions, .submit-row { flex-direction: column; }
+      button { width: 100%; }
     }
   </style>
 </head>
 <body>
   <div class="app">
     <div class="header glass">
-      <div class="brand">
-        <h1>🛠 Admin File Manager</h1>
-        <p>Manage your dashboard files — upload, edit, delete, and sync with dashboard.html</p>
+      <div>
+        <h1>⚙️ Admin Panel</h1>
+        <p>Manage dashboard files: add, edit, delete, and protect.</p>
       </div>
-
-      <div class="header-actions">
-        <button class="top-btn blue-btn" onclick="goDashboard()">Open Dashboard</button>
-        <button class="top-btn purple-btn" onclick="exportFiles()">Export JSON</button>
-      </div>
-    </div>
-
-    <div class="stats">
-      <div class="stat-card glass">
-        <h3>Total Files</h3>
-        <p id="totalFiles">0</p>
-      </div>
-      <div class="stat-card glass">
-        <h3>Protected</h3>
-        <p id="protectedFiles">0</p>
-      </div>
-      <div class="stat-card glass">
-        <h3>Open</h3>
-        <p id="openFiles">0</p>
-      </div>
-      <div class="stat-card glass">
-        <h3>Status</h3>
-        <p>Live</p>
+      <div class="actions">
+        <button class="blue" onclick="window.location.href='dashboard.html'">Open Dashboard</button>
+        <button class="red" onclick="logout()">Logout</button>
       </div>
     </div>
 
-    <div class="layout">
-      <div class="panel glass">
-        <h2 id="formTitle">Add New File</h2>
-        <p class="desc">Fill in the file details below. You can also upload a local file for preview/download in your own browser.</p>
+    <div class="form-box glass">
+      <h2 id="formTitle">Add New File</h2>
 
-        <div class="form-group">
-          <label>File Name</label>
-          <input type="text" id="fileName" placeholder="e.g. Project Files" />
-        </div>
-
-        <div class="form-group">
-          <label>File Type</label>
-          <input type="text" id="fileType" placeholder="e.g. ZIP Archive" />
-        </div>
-
-        <div class="form-group">
-          <label>File Size</label>
-          <input type="text" id="fileSize" placeholder="e.g. 24 MB" />
-        </div>
-
-        <div class="form-group">
-          <label>Icon Emoji</label>
-          <input type="text" id="fileIcon" placeholder="e.g. 📦" maxlength="2" />
-        </div>
-
-        <div class="form-group">
-          <label>Description / Info</label>
-          <textarea id="fileInfo" placeholder="Write file details here..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>File Link (optional)</label>
-          <input type="text" id="fileLink" placeholder="https://example.com/file.zip" />
-        </div>
-
-        <div class="form-group">
-          <label>Or Upload File (browser/local only)</label>
-          <input type="file" id="fileUpload" />
-        </div>
-
-        <div class="form-group">
-          <label>Protection</label>
-          <select id="fileProtected">
-            <option value="true">Protected</option>
-            <option value="false">Open</option>
-          </select>
-        </div>
-
-        <div class="form-actions">
-          <button class="action-btn save-btn" onclick="saveFile()">Save File</button>
-          <button class="action-btn reset-btn" onclick="resetForm()">Reset</button>
-          <button class="action-btn danger-btn" onclick="clearAllFiles()">Delete All</button>
-        </div>
+      <div class="grid">
+        <input type="text" id="fileName" placeholder="File Name" />
+        <input type="text" id="fileType" placeholder="File Type (ZIP, PDF, MP4...)" />
+        <input type="text" id="fileSize" placeholder="File Size (e.g. 24 MB)" />
+        <input type="text" id="fileIcon" placeholder="Emoji Icon (📁, 🎬, 💻...)" />
+        <input type="url" id="fileLink" placeholder="File Download Link" />
+        <select id="fileProtected">
+          <option value="true">Protected</option>
+          <option value="false">Open</option>
+        </select>
       </div>
 
-      <div class="panel glass">
-        <div class="files-toolbar">
-          <div>
-            <h2>Stored Files</h2>
-            <p class="desc" style="margin: 6px 0 0;">Click edit to update a file.</p>
-          </div>
+      <textarea id="fileInfo" placeholder="File description / info..."></textarea>
 
-          <div class="search-box">
-            <input type="text" id="searchFiles" placeholder="Search files..." />
-          </div>
-        </div>
-
-        <div class="files-list" id="filesList"></div>
+      <div class="submit-row">
+        <button class="green" onclick="saveFile()">Save File</button>
+        <button class="gray" onclick="resetForm()">Clear</button>
       </div>
+
+      <div class="message" id="message"></div>
     </div>
+
+    <div class="files-list" id="filesList"></div>
   </div>
-
-  <div class="toast" id="toast"></div>
 
   <script>
     "use strict";
 
-    const STORAGE_KEY = "dashboard_files_v2";
-    let editingId = null;
+    if (localStorage.getItem("admin_logged_in") !== "true") {
+      window.location.href = "login.html";
+    }
+
+    const STORAGE_KEY = "dashboard_files_v3";
+    let editId = null;
 
     const defaultFiles = [
       {
@@ -610,7 +265,7 @@
         type: "ZIP Archive",
         size: "24 MB",
         icon: "📦",
-        info: "Main project archive with assets, docs, and packaged build.",
+        info: "Main project archive with assets and packaged build.",
         link: "https://example.com/file1.zip",
         protected: true
       },
@@ -620,7 +275,7 @@
         type: "RAR Archive",
         size: "18 MB",
         icon: "🎨",
-        info: "Design resources, icons, templates, and branding materials.",
+        info: "Design resources and templates.",
         link: "https://example.com/file2.zip",
         protected: true
       },
@@ -630,29 +285,9 @@
         type: "Folder",
         size: "12 MB",
         icon: "💻",
-        info: "Frontend + backend source code package with scripts and configs.",
+        info: "Frontend + backend source package.",
         link: "https://example.com/file3.zip",
         protected: true
-      },
-      {
-        id: crypto.randomUUID(),
-        name: "Notes Collection",
-        type: "PDF",
-        size: "6 MB",
-        icon: "📝",
-        info: "Open-access notes collection in PDF format.",
-        link: "https://example.com/file4.zip",
-        protected: false
-      },
-      {
-        id: crypto.randomUUID(),
-        name: "Media Bundle",
-        type: "MP4 Pack",
-        size: "102 MB",
-        icon: "🎬",
-        info: "Video and media bundle for presentations and previews.",
-        link: "https://example.com/file5.zip",
-        protected: false
       }
     ];
 
@@ -662,7 +297,6 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultFiles));
         return defaultFiles;
       }
-
       try {
         return JSON.parse(saved);
       } catch {
@@ -671,133 +305,144 @@
       }
     }
 
-    function setFiles(files) {
+    function saveFilesToStorage(files) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(files));
-    }
-
-    function showToast(text) {
-      const toast = document.getElementById("toast");
-      toast.textContent = text;
-      toast.classList.add("show");
-      clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2600);
-    }
-
-    function escapeHTML(str = "") {
-      return str
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function sanitizeURL(url) {
-      if (!url) return "";
-      try {
-        const parsed = new URL(url, window.location.origin);
-        const allowed = ["http:", "https:", "blob:", "data:"];
-        return allowed.includes(parsed.protocol) ? parsed.href : "";
-      } catch {
-        return "";
-      }
-    }
-
-    function updateStats() {
-      const files = getFiles();
-      document.getElementById("totalFiles").textContent = files.length;
-      document.getElementById("protectedFiles").textContent = files.filter(f => f.protected).length;
-      document.getElementById("openFiles").textContent = files.filter(f => !f.protected).length;
     }
 
     function renderFiles() {
       const files = getFiles();
       const list = document.getElementById("filesList");
-      const search = document.getElementById("searchFiles").value.toLowerCase().trim();
+      list.innerHTML = "";
 
-      const filtered = files.filter(file =>
-        file.name.toLowerCase().includes(search) ||
-        file.type.toLowerCase().includes(search)
-      );
+      files.forEach(file => {
+        const row = document.createElement("div");
+        row.className = "file-row glass";
 
-      if (!filtered.length) {
-        list.innerHTML = `<div class="empty">No files found.</div>`;
-        updateStats();
-        return;
-      }
-
-      list.innerHTML = filtered.map(file => `
-        <div class="file-item">
+        row.innerHTML = `
           <div class="file-left">
-            <div class="file-icon">${escapeHTML(file.icon || "📁")}</div>
-            <div class="file-meta">
+            <div class="icon">${escapeHTML(file.icon || "📁")}</div>
+            <div>
               <h3>${escapeHTML(file.name)}</h3>
               <p>${escapeHTML(file.type)} • ${escapeHTML(file.size)}</p>
-              <p>${escapeHTML(file.info || "No description")}</p>
-              <span class="badge ${file.protected ? "protected" : "open"}">
-                ${file.protected ? "Protected" : "Open"}
-              </span>
+              <span class="tag">${file.protected ? "Protected" : "Open"}</span>
             </div>
           </div>
 
-          <div class="file-actions">
-            <button class="small-btn edit-btn" onclick="editFile('${file.id}')">Edit</button>
-            <button class="small-btn delete-btn" onclick="deleteFile('${file.id}')">Delete</button>
+          <div class="actions">
+            <button class="blue" onclick="editFile('${file.id}')">Edit</button>
+            <button class="red" onclick="deleteFile('${file.id}')">Delete</button>
           </div>
-        </div>
-      `).join("");
+        `;
 
-      updateStats();
+        list.appendChild(row);
+      });
     }
 
-    async function saveFile() {
+    function saveFile() {
       const name = document.getElementById("fileName").value.trim();
       const type = document.getElementById("fileType").value.trim();
       const size = document.getElementById("fileSize").value.trim();
       const icon = document.getElementById("fileIcon").value.trim() || "📁";
+      const link = document.getElementById("fileLink").value.trim();
       const info = document.getElementById("fileInfo").value.trim();
-      const manualLink = document.getElementById("fileLink").value.trim();
       const isProtected = document.getElementById("fileProtected").value === "true";
-      const uploadInput = document.getElementById("fileUpload");
+      const msg = document.getElementById("message");
 
-      if (!name || !type || !size) {
-        showToast("⚠️ Please fill required fields.");
+      if (!name || !type || !size || !link) {
+        msg.textContent = "Please fill in all required fields.";
+        msg.className = "message error";
         return;
       }
 
-      let finalLink = sanitizeURL(manualLink);
+      let files = getFiles();
 
-      // If uploaded local file exists, create object URL
-      if (uploadInput.files.length > 0) {
-        finalLink = URL.createObjectURL(uploadInput.files[0]);
-      }
-
-      const files = getFiles();
-
-      if (editingId) {
-        const index = files.findIndex(f => f.id === editingId);
-        if (index !== -1) {
-          files[index] = {
-            ...files[index],
-            name,
-            type,
-            size,
-            icon,
-            info,
-            link: finalLink || files[index].link,
-            protected: isProtected
-          };
-          showToast("✅ File updated.");
-        }
+      if (editId) {
+        files = files.map(file =>
+          file.id === editId
+            ? { ...file, name, type, size, icon, link, info, protected: isProtected }
+            : file
+        );
+        msg.textContent = "File updated successfully.";
       } else {
-        files.unshift({
+        files.push({
           id: crypto.randomUUID(),
           name,
           type,
           size,
           icon,
+          link,
           info,
-          link: finalLink,
-          pro
+          protected: isProtected
+        });
+        msg.textContent = "File added successfully.";
+      }
+
+      msg.className = "message success";
+      saveFilesToStorage(files);
+      resetForm();
+      renderFiles();
+    }
+
+    function editFile(id) {
+      const files = getFiles();
+      const file = files.find(f => f.id === id);
+      if (!file) return;
+
+      editId = id;
+
+      document.getElementById("formTitle").textContent = "Edit File";
+      document.getElementById("fileName").value = file.name;
+      document.getElementById("fileType").value = file.type;
+      document.getElementById("fileSize").value = file.size;
+      document.getElementById("fileIcon").value = file.icon;
+      document.getElementById("fileLink").value = file.link;
+      document.getElementById("fileInfo").value = file.info || "";
+      document.getElementById("fileProtected").value = String(file.protected);
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function deleteFile(id) {
+      if (!confirm("Delete this file?")) return;
+
+      let files = getFiles();
+      files = files.filter(file => file.id !== id);
+      saveFilesToStorage(files);
+      renderFiles();
+
+      const msg = document.getElementById("message");
+      msg.textContent = "File deleted successfully.";
+      msg.className = "message success";
+    }
+
+    function resetForm() {
+      editId = null;
+      document.getElementById("formTitle").textContent = "Add New File";
+      document.getElementById("fileName").value = "";
+      document.getElementById("fileType").value = "";
+      document.getElementById("fileSize").value = "";
+      document.getElementById("fileIcon").value = "";
+      document.getElementById("fileLink").value = "";
+      document.getElementById("fileInfo").value = "";
+      document.getElementById("fileProtected").value = "true";
+    }
+
+    function logout() {
+      localStorage.removeItem("admin_logged_in");
+      window.location.href = "login.html";
+    }
+
+    function escapeHTML(str = "") {
+      return str.replace(/[&<>"']/g, m => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[m]);
+    }
+
+    renderFiles();
+  </script>
+</body>
+</html>
