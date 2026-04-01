@@ -1,0 +1,153 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0a0f1c;
+    color: #e2e8f0;
+}
+
+.header {
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    background: #111827;
+    border-bottom: 1px solid #1f2937;
+}
+
+.container {
+    padding: 20px;
+}
+
+.file {
+    background: #111827;
+    border: 1px solid #1e3a8a;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-name {
+    font-size: 16px;
+}
+
+button {
+    background: #3b82f6;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    background: #111827;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+input {
+    padding: 10px;
+    margin-top: 10px;
+    width: 200px;
+    border-radius: 5px;
+    border: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">📂 File Dashboard</div>
+
+<div class="container">
+
+    <!-- FILE LIST -->
+    <div class="file">
+        <span class="file-name">File 1</span>
+        <button onclick="openModal('https://example.com/file1.zip')">Download</button>
+    </div>
+
+    <div class="file">
+        <span class="file-name">File 2</span>
+        <button onclick="openModal('https://example.com/file2.zip')">Download</button>
+    </div>
+
+    <div class="file">
+        <span class="file-name">File 3</span>
+        <button onclick="openModal('https://example.com/file3.zip')">Download</button>
+    </div>
+
+    <div class="file">
+        <span class="file-name">File 4</span>
+        <button onclick="openModal('https://example.com/file4.zip')">Download</button>
+    </div>
+
+    <div class="file">
+        <span class="file-name">File 5</span>
+        <button onclick="openModal('https://example.com/file5.zip')">Download</button>
+    </div>
+
+</div>
+
+<!-- PASSWORD MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <h3>Enter Password</h3>
+        <input type="password" id="passInput" placeholder="Password">
+        <br><br>
+        <button onclick="checkPassword()">Unlock</button>
+    </div>
+</div>
+
+<script>
+let selectedLink = "";
+
+// Open modal
+function openModal(link) {
+    selectedLink = link;
+    document.getElementById("modal").style.display = "flex";
+}
+
+// Check password
+function checkPassword() {
+    const pass = document.getElementById("passInput").value;
+
+    if (pass === "1152") {
+        window.location.href = selectedLink;
+    } else {
+        alert("Wrong password!");
+    }
+}
+</script>
+
+</body>
+</html>
+```
