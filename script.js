@@ -1,4 +1,4 @@
-// AI Assistant Login Form JavaScript
+// nigga
 class AIAssistantLoginForm {
     constructor() {
         this.form = document.getElementById('loginForm');
@@ -26,7 +26,6 @@ class AIAssistantLoginForm {
         this.emailInput.addEventListener('input', () => this.clearError('email'));
         this.passwordInput.addEventListener('input', () => this.clearError('password'));
         
-        // Add placeholder for label animations
         this.emailInput.setAttribute('placeholder', ' ');
         this.passwordInput.setAttribute('placeholder', ' ');
     }
@@ -35,7 +34,6 @@ class AIAssistantLoginForm {
         this.passwordToggle.addEventListener('click', () => {
             const type = this.passwordInput.type === 'password' ? 'text' : 'password';
             this.passwordInput.type = type;
-            
             this.passwordToggle.classList.toggle('toggle-active', type === 'text');
         });
     }
@@ -50,7 +48,6 @@ class AIAssistantLoginForm {
     }
     
     setupAIEffects() {
-        // Add neural connection effect on input focus
         [this.emailInput, this.passwordInput].forEach(input => {
             input.addEventListener('focus', (e) => {
                 this.triggerNeuralEffect(e.target.closest('.smart-field'));
@@ -59,7 +56,6 @@ class AIAssistantLoginForm {
     }
     
     triggerNeuralEffect(field) {
-        // Add subtle AI processing effect
         const indicator = field.querySelector('.ai-indicator');
         indicator.style.opacity = '1';
         
@@ -132,15 +128,32 @@ class AIAssistantLoginForm {
         if (!isEmailValid || !isPasswordValid) {
             return;
         }
-        
+
+        // 🔐 HARD-CODED LOGIN
+        const correctEmail = "777zent@gmail.com";
+        const correctPassword = "777zentdevfileqer1";
+
+        const email = this.emailInput.value.trim();
+        const password = this.passwordInput.value;
+
+        // ❌ WRONG LOGIN
+        if (email !== correctEmail || password !== correctPassword) {
+            this.showError('password', 'Access denied: Invalid credentials');
+            return;
+        }
+
+        // ✅ CORRECT LOGIN
         this.setLoading(true);
         
         try {
-            // Simulate AI authentication processing
-            await new Promise(resolve => setTimeout(resolve, 2500));
-            
-            // Show neural success
+            await new Promise(resolve => setTimeout(resolve, 1500));
             this.showNeuralSuccess();
+
+            // 🚀 Redirect after success
+            setTimeout(() => {
+                window.location.href = "dashboard.html"; // change if needed
+            }, 3200);
+
         } catch (error) {
             this.showError('password', 'Neural connection failed. Please retry.');
         } finally {
@@ -149,32 +162,18 @@ class AIAssistantLoginForm {
     }
     
     async handleSocialLogin(provider, button) {
-        console.log(`Initializing ${provider} connection...`);
-        
-        // AI-enhanced loading state
         const originalHTML = button.innerHTML;
         button.style.pointerEvents = 'none';
         button.style.opacity = '0.7';
         
-        const loadingHTML = `
+        button.innerHTML = `
             <div class="social-bg"></div>
-            <div style="display: flex; gap: 2px;">
-                <div style="width: 3px; height: 12px; background: currentColor; border-radius: 1px; animation: neuralSpinner 1.2s ease-in-out infinite;"></div>
-                <div style="width: 3px; height: 12px; background: currentColor; border-radius: 1px; animation: neuralSpinner 1.2s ease-in-out infinite; animation-delay: 0.1s;"></div>
-                <div style="width: 3px; height: 12px; background: currentColor; border-radius: 1px; animation: neuralSpinner 1.2s ease-in-out infinite; animation-delay: 0.2s;"></div>
-            </div>
             <span>Connecting...</span>
             <div class="social-glow"></div>
         `;
         
-        button.innerHTML = loadingHTML;
-        
         try {
             await new Promise(resolve => setTimeout(resolve, 2000));
-            console.log(`Redirecting to ${provider} neural interface...`);
-            // window.location.href = `/auth/${provider.toLowerCase().replace(' ', '-')}`;
-        } catch (error) {
-            console.error(`${provider} connection failed: ${error.message}`);
         } finally {
             button.style.pointerEvents = 'auto';
             button.style.opacity = '1';
@@ -186,7 +185,6 @@ class AIAssistantLoginForm {
         this.submitButton.classList.toggle('loading', loading);
         this.submitButton.disabled = loading;
         
-        // Disable social buttons during neural processing
         this.socialButtons.forEach(button => {
             button.style.pointerEvents = loading ? 'none' : 'auto';
             button.style.opacity = loading ? '0.5' : '1';
@@ -194,7 +192,6 @@ class AIAssistantLoginForm {
     }
     
     showNeuralSuccess() {
-        // Hide form with neural transition
         this.form.style.transform = 'scale(0.95)';
         this.form.style.opacity = '0';
         
@@ -204,20 +201,12 @@ class AIAssistantLoginForm {
             document.querySelector('.signup-section').style.display = 'none';
             document.querySelector('.auth-separator').style.display = 'none';
             
-            // Show neural success
             this.successMessage.classList.add('show');
-            
         }, 300);
-        
-        // Redirect after neural connection established
-        setTimeout(() => {
-            console.log('Neural link established - accessing AI workspace...');
-            // window.location.href = '/ai-dashboard';
-        }, 3200);
     }
 }
 
-// Initialize the neural form when DOM is loaded
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     new AIAssistantLoginForm();
 });
