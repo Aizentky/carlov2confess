@@ -130,7 +130,7 @@ class AIAssistantLoginForm {
         }
 
         // 🔐 HARD-CODED LOGIN
-        const correctEmail = "root@";
+        const correctEmail = "root@gmail.com";
         const correctPassword = "adminacc";
 
         const email = this.emailInput.value.trim();
