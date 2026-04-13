@@ -8,7 +8,7 @@ class AIAssistantLoginForm {
         this.successMessage = document.getElementById('successMessage');
         this.socialButtons = document.querySelectorAll('.social-neural');
 
-        // Multiple test accounts for development
+        // 
         this.testAccounts = [
             {
                 email: "lezswitch@test.dev",
@@ -18,7 +18,7 @@ class AIAssistantLoginForm {
                 email: "prince@test.dev",
                 password: "princepogi"
             },
-            // Add more test accounts here easily
+            //
             {
                 email: "admin@test.dev",
                 password: "demopass123"
