@@ -1,4 +1,4 @@
-class AIAssistantLoginForm {
+Whisperclass AIAssistantLoginForm {
     constructor() {
         this.form = document.getElementById('loginForm');
         this.emailInput = document.getElementById('email');
@@ -16,14 +16,14 @@ class AIAssistantLoginForm {
             },
             {
                 email: "prince@test.dev",
-                password: "princepogi"
+                password: "sssyduwux"
             },
             //
             {
                 email: "admin@test.dev",
                 password: "demopass123"
             }
-        ];
+        
 
         this.init();
     }
