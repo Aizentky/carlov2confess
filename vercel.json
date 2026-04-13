@@ -2,14 +2,3 @@
   "cleanUrls": true,
   "redirects": [
     {
-      "source": "/dashboard",
-      "destination": "/login",
-      "permanent": false
-    },
-    {
-      "source": "/admin",
-      "destination": "/login",
-      "permanent": false
-    }
-  ]
-}
