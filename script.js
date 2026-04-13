@@ -20,7 +20,7 @@ class AIAssistantLoginForm {
             },
             // Add more test accounts here easily
             {
-                email: "admin@",
+                email: "admin@test.dev",
                 password: "demopass123"
             }
         ];
