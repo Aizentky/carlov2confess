@@ -4,12 +4,12 @@
     {
       "source": "/dashboard",
       "destination": "/login",
-      "permanent": true
+      "permanent": false
     },
     {
       "source": "/admin",
       "destination": "/login",
-      "permanent": true
+      "permanent": false
     }
   ]
 }
