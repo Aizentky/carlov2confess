@@ -1,0 +1,14 @@
+[[redirects]]
+  from = "/*"
+  to = "/:splat.html"
+  status = 200
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/login"
+  status = 302
+
+[[redirects]]
+  from = "/admin"
+  to = "/login"
+  status = 302
