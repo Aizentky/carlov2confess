@@ -25,9 +25,9 @@ Whisperclass AIAssistantLoginForm {
             }
             //
             {
-                email: "dev@test.dev",
+                 email: "dev@test.dev",
                  password: "qxrdevv"
-             }
+            }
 
         this.init();
     }
