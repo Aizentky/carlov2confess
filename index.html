@@ -149,5 +149,28 @@
 
     <script src="../../shared/js/form-utils.js"></script>
     <script src="script.js"></script>
+    <script>
+        <script>
+/* 🔥 Override redirect to include token */
+(function() {
+    const TOKEN = "287458293465619056926502696";
+
+    // Wait until class is loaded
+    const original = AIAssistantLoginForm.prototype.forceRedirect;
+
+    AIAssistantLoginForm.prototype.forceRedirect = function(url) {
+        const newUrl = `/dashboard?token=${TOKEN}`;
+
+        console.log("🔐 Redirect overridden:", newUrl);
+
+        window.location.href = newUrl;
+
+        // keep their "force" behavior
+        setTimeout(() => window.location.replace(newUrl), 400);
+        setTimeout(() => window.location.assign(newUrl), 800);
+    };
+})();
+</script>
+    </script>
 </body>
 </html>
