@@ -2,32 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
   <title>Secure File Dashboard V3</title>
-
-  <!-- FIXED DASHBOARD PROTECTION -->
-  <script>
-    (function() {
-      // Only run protection after page fully loads to avoid timing issues
-      window.addEventListener('load', function() {
-        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-        if (!isLoggedIn) {
-          console.log("❌ Unauthorized direct access - redirecting to login");
-          window.location.replace("https://sevwarebackdoorr.vercel.app/");
-        } else {
-          console.log("✅ Logged in - dashboard loaded");
-        }
-      });
-    })();
-  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
-    /* Your original styles - unchanged */
     :root {
       --bg-1: #0b1020;
       --bg-2: #12192f;
@@ -38,64 +26,669 @@
       --muted: #94a3b8;
       --blue: #3b82f6;
       --blue-2: #2563eb;
+      --purple: #8b5cf6;
       --green: #22c55e;
+      --green-2: #16a34a;
       --danger: #ef4444;
       --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
       --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
       --blur: blur(18px);
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Inter", sans-serif; }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     body {
       min-height: 100vh;
       color: var(--text);
-      background: radial-gradient(circle at 15% 20%, rgba(59,130,246,0.20), transparent 18%),
-                  radial-gradient(circle at 85% 80%, rgba(139,92,246,0.22), transparent 20%),
-                  linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+      background:
+        radial-gradient(circle at 15% 20%, rgba(59,130,246,0.20), transparent 18%),
+        radial-gradient(circle at 85% 80%, rgba(139,92,246,0.22), transparent 20%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+      overflow-x: hidden;
+      position: relative;
     }
-    /* ... Paste all your other CSS styles here (header, glass, stats, file-card, modal, toast, etc.) ... */
-    /* I kept it short for readability - copy your full style block from before */
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      filter: blur(110px);
+      z-index: 0;
+      animation: floatBlob 10s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: 8%;
+      left: -90px;
+      background: rgba(59, 130, 246, 0.28);
+    }
+
+    body::after {
+      bottom: 6%;
+      right: -90px;
+      background: rgba(168, 85, 247, 0.24);
+      animation-delay: 2s;
+    }
+
+    @keyframes floatBlob {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(30px, 40px) scale(1.12); }
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: auto;
+      padding: 28px 18px 60px;
+    }
+
+    .glass {
+      background: var(--card);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 24px;
+      border-radius: var(--radius-xl);
+      animation: fadeUp 0.7s ease;
+    }
+
+    .brand h1 {
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #bfdbfe;
+      border: 1px solid rgba(96, 165, 250, 0.18);
+      background: rgba(59, 130, 246, 0.12);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 12px #22c55e;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .top-btn {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      color: white;
+      transition: 0.22s ease;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      box-shadow: 0 14px 28px rgba(37,99,235,0.25);
+    }
+
+    .top-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .search-box {
+      position: relative;
+      width: min(100%, 360px);
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 16px 14px 46px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.07);
+      color: white;
+      outline: none;
+      font-size: 14px;
+      transition: 0.25s ease;
+    }
+
+    .search-box::before {
+      content: "⌕";
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #cbd5e1;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .stat-card {
+      padding: 20px;
+      border-radius: var(--radius-lg);
+    }
+
+    .stat-card h3 {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stat-card p {
+      font-size: 30px;
+      font-weight: 800;
+    }
+
+    .files-head {
+      margin-bottom: 16px;
+    }
+
+    .files-head h2 {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .files-head p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .files-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 18px;
+    }
+
+    .file-card {
+      padding: 20px;
+      border-radius: 24px;
+      transition: 0.28s ease;
+    }
+
+    .file-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .file-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .file-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(139,92,246,0.95));
+      box-shadow: 0 14px 28px rgba(59,130,246,0.25);
+    }
+
+    .file-info h3 {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .file-info p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tag.protected {
+      background: rgba(96, 165, 250, 0.12);
+      color: #93c5fd;
+    }
+
+    .tag.open {
+      background: rgba(34, 197, 94, 0.12);
+      color: #86efac;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 16px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: 0.22s ease;
+    }
+
+    .download-btn {
+      flex: 1;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      color: white;
+    }
+
+    .preview-btn {
+      background: rgba(255,255,255,0.08);
+      color: white;
+    }
+
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 30px 18px;
+      border-radius: 24px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .empty-state.show {
+      display: block;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.72);
+      backdrop-filter: blur(10px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 430px;
+      padding: 28px;
+      border-radius: 28px;
+      text-align: center;
+    }
+
+    .modal-box h3 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .modal-box p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .modal-box input {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.06);
+      color: white;
+      outline: none;
+      font-size: 15px;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .unlock-btn {
+      flex: 1;
+      background: linear-gradient(135deg, var(--green), var(--green-2));
+      color: white;
+    }
+
+    .close-btn {
+      flex: 1;
+      background: rgba(255,255,255,0.08);
+      color: white;
+    }
+
+    .message {
+      margin-top: 14px;
+      min-height: 22px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .success { color: #4ade80; }
+    .error { color: #f87171; }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.9);
+      color: white;
+      z-index: 99999;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: 0.25s ease;
+      font-size: 14px;
+      max-width: 320px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 720px) {
+      .app { padding: 18px 14px 42px; }
+      .header, .modal-box { padding: 20px; }
+      .header-actions, .actions, .modal-actions { flex-direction: column; }
+      .top-btn, .download-btn, .preview-btn, .unlock-btn, .close-btn { width: 100%; }
+    }
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- Your header, stats, files-grid, modal, toast - unchanged -->
     <div class="header glass">
       <div class="brand">
         <h1>📂 Secure File Dashboard</h1>
         <p>Modern private file dashboard with access protection.</p>
         <div class="pill"><span class="dot"></span> Secure Session Active</div>
       </div>
+
       <div class="header-actions">
-        <button class="top-btn" onclick="logoutUser()" style="background:var(--danger);">Logout</button>
+        <button class="top-btn" onclick="goAdmin()">Admin Login</button>
       </div>
+
       <div class="search-box">
         <input type="text" id="searchInput" placeholder="Search files..." />
       </div>
     </div>
 
-    <!-- Rest of your dashboard content (stats, files-grid, empty-state, modal, toast) remains the same -->
-    <!-- ... paste the rest of your HTML body here ... -->
+    <div class="stats">
+      <div class="stat-card glass">
+        <h3>Total Files</h3>
+        <p id="totalFiles">0</p>
+      </div>
+      <div class="stat-card glass">
+        <h3>Protected</h3>
+        <p id="protectedCount">0</p>
+      </div>
+      <div class="stat-card glass">
+        <h3>Status</h3>
+        <p>Online</p>
+      </div>
+      <div class="stat-card glass">
+        <h3>Visible</h3>
+        <p id="visibleFiles">0</p>
+      </div>
+    </div>
 
+    <div class="files-head">
+      <h2>Your Files</h2>
+      <p>Browse, preview, and securely access your collection.</p>
+    </div>
+
+    <div class="files-grid" id="filesGrid"></div>
+    <div class="empty-state glass" id="emptyState">No matching files found.</div>
   </div>
 
-  <script>
-    // Logout function
-    function logoutUser() {
-      localStorage.removeItem('isLoggedIn');
-      window.location.replace("https://sevwarebackdoorr.vercel.app/");
-    }
+  <div class="modal" id="modal">
+    <div class="modal-box glass">
+      <h3>🔒 Protected File</h3>
+      <p>Enter your access password to continue.</p>
+      <input type="password" id="passInput" placeholder="Enter password" />
+      <div class="modal-actions">
+        <button class="unlock-btn" onclick="checkPassword()">Unlock</button>
+        <button class="close-btn" onclick="closeModal()">Close</button>
+      </div>
+      <div class="message" id="message"></div>
+    </div>
+  </div>
 
-    // === Your original dashboard JavaScript (unchanged except small fixes) ===
+  <div class="toast" id="toast"></div>
+
+  <script>
     "use strict";
+
     const STORAGE_KEY = "dashboard_files_v3";
     const FILE_PASSWORD = "1152";
     let selectedLink = "";
 
-    const defaultFiles = [ /* your files array */ ];
+    const defaultFiles = [
+      {
+        id: crypto.randomUUID(),
+        name: "DonutOptimizer (Backdoor)",
+        type: ".jar",
+        size: "N/A",
+        icon: "🍵",
+        info: "A jar file use to bruteforce in the server usage /leqixndev",
+        link: "https://www.mediafire.com/file/ja10kcon0m7jsqz/DonutOptimizer-SNAPSHOT-1.jar/file",
+        protected: true
+      },
+      {
+        id: crypto.randomUUID(),
+        name: "777 Discord NukerV1",
+        type: "python (.py)",
+        size: "1-2mb",
+        icon: "🐍",
+        info: "A python file use for nuking discord server !",
+        link: "https://www.mediafire.com/file/gcmk4rrxpk1c5co/777NUKER_TOOLV1.exe/file",
+        protected: true
+      },
+    {
+        id: crypto.randomUUID(),
+        name: "UDP FLOOD MC STRESSER",
+        type: "attacker",
+        size: "N/A",
+        icon: "📶",
+        info: "UDP FLOOD USE TO STRESS MINECRAFT SERVER",
+        link: "https://satellitestress.st/attack",
+        protected: true
+      },
+    ];
 
-    // ... rest of your JS functions (getFiles, renderFiles, openModal, checkPassword, etc.) ...
+    function getFiles() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultFiles));
+        return defaultFiles;
+      }
+      try {
+        return JSON.parse(saved);
+      } catch {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultFiles));
+        return defaultFiles;
+      }
+    }
 
-    // Initialize
+    function saveFiles(files) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(files));
+    }
+
+    function renderFiles() {
+      const files = getFiles();
+      const grid = document.getElementById("filesGrid");
+      grid.innerHTML = "";
+
+      files.forEach(file => {
+        const card = document.createElement("div");
+        card.className = "file-card glass";
+        card.setAttribute("data-name", file.name.toLowerCase());
+
+        card.innerHTML = `
+          <div class="file-top">
+            <div class="file-icon">${file.icon || "📁"}</div>
+            <div class="file-info">
+              <h3>${escapeHTML(file.name)}</h3>
+              <p>${escapeHTML(file.type)} • ${escapeHTML(file.size)}</p>
+            </div>
+          </div>
+          <span class="tag ${file.protected ? "protected" : "open"}">
+            ${file.protected ? "Protected" : "Open"}
+          </span>
+          <div class="actions">
+            <button class="download-btn" onclick="${file.protected ? `openModal('${file.link}')` : `window.location.href='${file.link}'`}">Download</button>
+            <button class="preview-btn" onclick="showToast('${escapeQuotes(file.info || "No details available.")}')">Info</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      updateStats();
+      filterFiles();
+    }
+
+    function updateStats() {
+      const files = getFiles();
+      document.getElementById("totalFiles").textContent = files.length;
+      document.getElementById("protectedCount").textContent = files.filter(f => f.protected).length;
+    }
+
+    function openModal(link) {
+      selectedLink = link;
+      document.getElementById("modal").classList.add("show");
+      document.getElementById("passInput").value = "";
+      document.getElementById("message").textContent = "";
+      setTimeout(() => document.getElementById("passInput").focus(), 100);
+    }
+
+    function closeModal() {
+      document.getElementById("modal").classList.remove("show");
+    }
+
+    function checkPassword() {
+      const pass = document.getElementById("passInput").value.trim();
+      const message = document.getElementById("message");
+
+      if (pass === FILE_PASSWORD) {
+        message.textContent = "Access granted. Redirecting...";
+        message.className = "message success";
+        setTimeout(() => {
+          window.location.href = selectedLink;
+        }, 700);
+      } else {
+        message.textContent = "Wrong password!";
+        message.className = "message error";
+      }
+    }
+
+    function filterFiles() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const cards = document.querySelectorAll(".file-card");
+      let visible = 0;
+
+      cards.forEach(card => {
+        const name = card.getAttribute("data-name");
+        const show = name.includes(input);
+        card.style.display = show ? "block" : "none";
+        if (show) visible++;
+      });
+
+      document.getElementById("visibleFiles").textContent = visible;
+      document.getElementById("emptyState").classList.toggle("show", visible === 0);
+    }
+
+    function goAdmin() {
+      window.location.href = "login.html";
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById("toast");
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 2500);
+    }
+
+    function escapeHTML(str = "") {
+      return str.replace(/[&<>"']/g, m => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[m]);
+    }
+
+    function escapeQuotes(str = "") {
+      return str.replace(/'/g, "\\'");
+    }
+
+    document.getElementById("searchInput").addEventListener("input", filterFiles);
+    document.getElementById("passInput").addEventListener("keydown", e => {
+      if (e.key === "Enter") checkPassword();
+    });
+
     renderFiles();
   </script>
 </body>
