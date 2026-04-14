@@ -1,12 +1,3 @@
 {
   "cleanUrls": true
 }
-
-{
-  "rewrites": [
-    {
-      "source": "/dashboard",
-      "destination": "/28347hg238945g62389h47hvfn8347.html"
-    }
-  ]
-}
