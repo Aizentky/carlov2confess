@@ -1,5 +1,3 @@
-<script>
-// Whisperclass AI Assistant Login Form - Fixed & Cleaned
 class AIAssistantLoginForm {
     constructor() {
         this.form = document.getElementById('loginForm');
