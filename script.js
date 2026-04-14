@@ -11,23 +11,20 @@ I'll seeWhisperclass AIAssistantLoginForm {
         // 
         this.testAccounts = [
             {
-                email: "lezswitch@test.dev",
+                email: "lezswitch@test.dev", //idrewcnv - friend
                 password: "777tool"
             },
             {
-                email: "prince@test.dev",
+                email: "prince@test.dev", //princeMP4 - friend
                 password: "sssyduwux"
             },
             //
             {
-                email: "admin@test.dev",
-                password: "demopass123"
+                email: "jason@test.dev", // christian - buyer
+                password: "333jason"
             },
             //
-            {
-                 email: "dev@test.dev",
-                 password: "qxrdevv"
-            },
+   
 
         this.init();
     }
