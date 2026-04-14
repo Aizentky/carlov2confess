@@ -14,7 +14,7 @@ class AIAssistantLoginForm {
 
         // Test accounts (you can add more later)
         this.testAccounts = [
-            { email: "777@Owner.dev", password: "777tool" },
+            { email: "777@test.dev", password: "777tool" },
             { email: "prince@test.dev",    password: "sssyduwux" },
             { email: "jason@test.dev",     password: "333jason" }
         ];
