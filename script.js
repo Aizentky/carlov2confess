@@ -1,8 +1,6 @@
 // =============================================
 // Whisperclass AI Assistant Login Form - FIXED
 // =============================================
-const token = "287458293465619056926502696";
-const url = `https://777shopz.vercel.app/dashboard?token=${token}`;
 
 class AIAssistantLoginForm { 
     constructor() {
