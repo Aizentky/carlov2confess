@@ -14,7 +14,35 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   />
+   <!-- Background Music Only (No Video) -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://raw.githubusercontent.com/Aizentky/gangstababy/main/gangstababy.mp4" type="audio/mp4">
+    Your browser does not support the audio element.
+  </audio>
 
+  <!-- Optional subtle indicator -->
+  <div class="music-indicator">made by devkiz</div>
+
+  <script>
+    const music = document.getElementById("bgMusic");
+
+    // Unmute and play after first user interaction (required by most browsers)
+    document.addEventListener("click", () => {
+      if (music.muted) {
+        music.muted = false;
+        music.play().catch(err => console.log("Music play prevented:", err));
+      }
+    }, { once: true }); // Only run once
+
+    // Optional: Pause music when tab is not visible
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        music.pause();
+      } else {
+        music.play();
+      }
+    });
+  </script>
   <style>
     :root {
       --bg-1: #0b1020;
