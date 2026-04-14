@@ -23,8 +23,7 @@ class AIAssistantLoginForm {
             {
                 email: "jason@test.dev",        // christian - buyer
                 password: "333jason"
-            }
-        ];
+            },
 
         this.init();
     }
