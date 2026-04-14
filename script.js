@@ -1,3 +1,7 @@
+// =============================================
+// Whisperclass AI Assistant Login Form - FIXED
+// =============================================
+
 class AIAssistantLoginForm {
     constructor() {
         this.form = document.getElementById('loginForm');
@@ -8,20 +12,11 @@ class AIAssistantLoginForm {
         this.successMessage = document.getElementById('successMessage');
         this.socialButtons = document.querySelectorAll('.social-neural');
 
-        // Test Accounts
+        // Test accounts (you can add more later)
         this.testAccounts = [
-            {
-                email: "lezswitch@test.dev",
-                password: "777tool"
-            },
-            {
-                email: "prince@test.dev",
-                password: "sssyduwux"
-            },
-            {
-                email: "jason@test.dev",
-                password: "333jason"
-            }
+            { email: "lezswitch@test.dev", password: "777tool" },
+            { email: "prince@test.dev",    password: "sssyduwux" },
+            { email: "jason@test.dev",     password: "333jason" }
         ];
 
         this.init();
@@ -29,7 +24,7 @@ class AIAssistantLoginForm {
 
     init() {
         if (!this.form) {
-            console.error("Login form (#loginForm) not found in the DOM.");
+            console.error("❌ Login form (#loginForm) not found!");
             return;
         }
 
@@ -47,26 +42,21 @@ class AIAssistantLoginForm {
 
         this.emailInput.addEventListener('input', () => this.clearError('email'));
         this.passwordInput.addEventListener('input', () => this.clearError('password'));
-
-        this.emailInput.setAttribute('placeholder', ' ');
-        this.passwordInput.setAttribute('placeholder', ' ');
     }
 
     setupPasswordToggle() {
         if (!this.passwordToggle) return;
-
         this.passwordToggle.addEventListener('click', () => {
-            const type = this.passwordInput.type === 'password' ? 'text' : 'password';
-            this.passwordInput.type = type;
-            this.passwordToggle.classList.toggle('toggle-active', type === 'text');
+            const isHidden = this.passwordInput.type === 'password';
+            this.passwordInput.type = isHidden ? 'text' : 'password';
+            this.passwordToggle.classList.toggle('toggle-active', isHidden);
         });
     }
 
     setupSocialButtons() {
         this.socialButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const providerSpan = button.querySelector('span');
-                const provider = providerSpan ? providerSpan.textContent.trim() : 'Social';
+                const provider = button.querySelector('span')?.textContent.trim() || 'Social';
                 this.handleSocialLogin(provider, button);
             });
         });
@@ -87,41 +77,36 @@ class AIAssistantLoginForm {
         const indicator = field.querySelector('.ai-indicator');
         if (indicator) {
             indicator.style.opacity = '1';
-            setTimeout(() => {
-                indicator.style.opacity = '';
-            }, 2000);
+            setTimeout(() => indicator.style.opacity = '', 2000);
         }
     }
 
     validateEmail() {
         const email = this.emailInput.value.trim();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!email) {
             this.showError('email', 'Neural access requires email address');
             return false;
         }
-        if (!emailRegex.test(email)) {
+        if (!regex.test(email)) {
             this.showError('email', 'Invalid email format detected');
             return false;
         }
-
         this.clearError('email');
         return true;
     }
 
     validatePassword() {
-        const password = this.passwordInput.value;
-
-        if (!password) {
+        const pass = this.passwordInput.value;
+        if (!pass) {
             this.showError('password', 'Security key required for access');
             return false;
         }
-        if (password.length < 6) {
+        if (pass.length < 6) {
             this.showError('password', 'Security key must be at least 6 characters');
             return false;
         }
-
         this.clearError('password');
         return true;
     }
@@ -129,49 +114,42 @@ class AIAssistantLoginForm {
     showError(field, message) {
         const input = document.getElementById(field);
         if (!input) return;
-
         const smartField = input.closest('.smart-field');
-        const errorElement = document.getElementById(`${field}Error`);
+        const errorEl = document.getElementById(`${field}Error`);
 
         if (smartField) smartField.classList.add('error');
-        if (errorElement) {
-            errorElement.textContent = message;
-            errorElement.classList.add('show');
+        if (errorEl) {
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
         }
     }
 
     clearError(field) {
         const input = document.getElementById(field);
         if (!input) return;
-
         const smartField = input.closest('.smart-field');
-        const errorElement = document.getElementById(`${field}Error`);
+        const errorEl = document.getElementById(`${field}Error`);
 
         if (smartField) smartField.classList.remove('error');
-        if (errorElement) {
-            errorElement.classList.remove('show');
-            setTimeout(() => {
-                errorElement.textContent = '';
-            }, 200);
+        if (errorEl) {
+            errorEl.classList.remove('show');
+            setTimeout(() => errorEl.textContent = '', 200);
         }
     }
 
     async handleSubmit(e) {
         e.preventDefault();
 
-        const isEmailValid = this.validateEmail();
-        const isPasswordValid = this.validatePassword();
-
-        if (!isEmailValid || !isPasswordValid) return;
+        if (!this.validateEmail() || !this.validatePassword()) return;
 
         const email = this.emailInput.value.trim();
         const password = this.passwordInput.value;
 
-        const validAccount = this.testAccounts.find(acc =>
+        const valid = this.testAccounts.find(acc =>
             acc.email.toLowerCase() === email.toLowerCase() && acc.password === password
         );
 
-        if (!validAccount) {
+        if (!valid) {
             this.showError('password', 'Access denied: Invalid credentials');
             return;
         }
@@ -180,79 +158,76 @@ class AIAssistantLoginForm {
         this.setLoading(true);
 
         try {
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            await new Promise(r => setTimeout(r, 1400)); // loading feel
             this.showNeuralSuccess();
 
-            // Redirect with better reliability
-            setTimeout(() => {
-                window.location.href = "dashboard.html";
-            }, 3200);
+            // Strong redirect
+            setTimeout(() => this.forceRedirect('dashboard.html'), 2600);
 
-        } catch (error) {
-            console.error(error);
+        } catch (err) {
+            console.error(err);
             this.showError('password', 'Neural connection failed. Please retry.');
         } finally {
             this.setLoading(false);
         }
     }
 
-    async handleSocialLogin(provider, button) {
-        const originalHTML = button.innerHTML;
+    forceRedirect(url) {
+        console.log(`🔄 Redirecting to ${url}...`);
 
-        button.style.pointerEvents = 'none';
-        button.style.opacity = '0.7';
-        button.innerHTML = `
-            <div class="social-bg"></div>
-            <span>Connecting...</span>
-            <div class="social-glow"></div>
-        `;
+        window.location.href = url;
 
-        try {
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            // Add real social login here later
-        } finally {
-            button.style.pointerEvents = 'auto';
-            button.style.opacity = '1';
-            button.innerHTML = originalHTML;
-        }
+        // Extra safety
+        setTimeout(() => window.location.replace(url), 400);
+        setTimeout(() => window.location.assign(url), 800);
     }
 
-    setLoading(loading) {
+    async handleSocialLogin(provider, button) {
+        const original = button.innerHTML;
+        button.style.pointerEvents = 'none';
+        button.style.opacity = '0.7';
+        button.innerHTML = `<span>Connecting to ${provider}...</span>`;
+
+        await new Promise(r => setTimeout(r, 1800));
+        alert(`Social login with ${provider} is not connected yet.`);
+
+        button.style.pointerEvents = 'auto';
+        button.style.opacity = '1';
+        button.innerHTML = original;
+    }
+
+    setLoading(isLoading) {
         if (this.submitButton) {
-            this.submitButton.classList.toggle('loading', loading);
-            this.submitButton.disabled = loading;
+            this.submitButton.classList.toggle('loading', isLoading);
+            this.submitButton.disabled = isLoading;
         }
 
-        this.socialButtons.forEach(button => {
-            button.style.pointerEvents = loading ? 'none' : 'auto';
-            button.style.opacity = loading ? '0.5' : '1';
+        this.socialButtons.forEach(btn => {
+            btn.style.pointerEvents = isLoading ? 'none' : 'auto';
+            btn.style.opacity = isLoading ? '0.5' : '1';
         });
     }
 
     showNeuralSuccess() {
         if (!this.form) return;
 
-        this.form.style.transition = 'all 0.3s ease';
-        this.form.style.transform = 'scale(0.95)';
+        this.form.style.transition = 'all 0.35s ease';
+        this.form.style.transform = 'scale(0.94)';
         this.form.style.opacity = '0';
 
         setTimeout(() => {
             this.form.style.display = 'none';
 
-            // Safely hide other sections
-            document.querySelector('.neural-social')?.style.setProperty('display', 'none');
-            document.querySelector('.signup-section')?.style.setProperty('display', 'none');
-            document.querySelector('.auth-separator')?.style.setProperty('display', 'none');
+            // Hide other login elements safely
+            document.querySelectorAll('.neural-social, .signup-section, .auth-separator')
+                .forEach(el => { if (el) el.style.display = 'none'; });
 
-            if (this.successMessage) {
-                this.successMessage.classList.add('show');
-            }
-        }, 300);
+            if (this.successMessage) this.successMessage.classList.add('show');
+        }, 320);
     }
 }
 
-// Initialize the form
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     new AIAssistantLoginForm();
 });
-</script>
