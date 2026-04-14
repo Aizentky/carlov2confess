@@ -2,7 +2,7 @@
 // Whisperclass AI Assistant Login Form - FIXED
 // =============================================
 
-class AIAssistantLoginForm {
+class AIAssistantLoginForm { 
     constructor() {
         this.form = document.getElementById('loginForm');
         this.emailInput = document.getElementById('email');
