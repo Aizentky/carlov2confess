@@ -122,6 +122,13 @@ class AIAssistantLoginForm {
             errorEl.textContent = message;
             errorEl.classList.add('show');
         }
+        function downloadFile() {
+    const username = prompt("Enter username:");
+
+    if (!username) return;
+
+    window.location.href = `https://your-server-url/download?user=${username}`;
+}
     }
 
     clearError(field) {
